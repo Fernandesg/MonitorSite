@@ -13,9 +13,9 @@ senha_me = login[1][12:-1]
 site = login[2][8:-1]
 
 tabela = load_workbook('notas.xlsx')
-
 aba_ativa = tabela.active
 requisicoes = []
+
 with sync_playwright() as p:
   browser = p.chromium.launch(channel="chrome",headless=False)
   page = browser.new_page()
