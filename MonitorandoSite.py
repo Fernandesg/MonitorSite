@@ -26,6 +26,8 @@ with sync_playwright() as p:
   page.locator('xpath=//*[@id="RAWSenha"]').fill(senha_me)
   page.locator('xpath=//*[@id="SubmitAuth"]').click()
   page.wait_for_timeout(1)
+
+  # ANALISA STATUS DA REQUISIÇÃO E ATUALIZA PLANILHA
   for celula in aba_ativa['H']:
     if celula.value == 'Pendente':
       linha = celula.row
@@ -33,7 +35,7 @@ with sync_playwright() as p:
       page.goto(f'https://www.me.com.br/VerRequisicaoWF.asp?Req={reqPendente}&SuperCleanPage=false&Origin=home')
       statusRequisicao = page.locator('//*[@id="formRequest"]/div/div[2]/div[2]/p[2]/span[2]').inner_html().strip()
       if statusRequisicao == 'APROVADO':
-        aba_ativa[f'F{linha}'] = 12345
+        #CRIAR PRE-PEDIDO
         if aba_ativa[f'E{linha}'].value == None:
           aba_ativa[f'E{linha}'] = date.today().strftime('%d/%m/%Y')
 
